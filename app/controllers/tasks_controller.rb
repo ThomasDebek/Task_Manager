@@ -13,6 +13,13 @@ class TasksController < ApplicationController
              end
   end
 
+
+  def toggle
+    @task = Task.find(params[:id])
+    @task.update!(completed: !@task.completed)
+    redirect_to tasks_path
+  end
+
   # GET /tasks/1 or /tasks/1.json
   def show
   end
