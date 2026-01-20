@@ -2,6 +2,9 @@
   <p>
     <strong>Title:</strong>
     <%= task.title %>
+    – <%= task.completed ? "DONE" : "ACTIVE" %>
+    <%= button_to "Toggle status", toggle_task_path(task), method: :patch %>
+
   </p>
 
   <p>

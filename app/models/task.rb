@@ -1,7 +1,6 @@
 class Task < ApplicationRecord
   validates :title, presence: true
 
-  scope :completed, [where: { completed: true }]
-  scope :active, [where: { completed: false }]
-
+  scope :active, -> { where(completed: false) }
+  scope :completed, -> { where(completed: true) }
 end
