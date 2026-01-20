@@ -3,7 +3,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = case params[:filter]
+             when "active"
+               Task.active
+             when "completed"
+               Task.completed
+             else
+               Task.all
+             end
   end
 
   # GET /tasks/1 or /tasks/1.json
