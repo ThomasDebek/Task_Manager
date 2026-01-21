@@ -1,20 +1,39 @@
-<div id="<%= dom_id task %>">
-  <p>
-    <strong>Title:</strong>
-    <%= task.title %>
-    – <%= task.completed ? "DONE" : "ACTIVE" %>
-    <%= button_to "Toggle status", toggle_task_path(task), method: :patch %>
+<div class="flex items-start justify-between gap-4">
+  <div>
+    <h3 class="text-lg font-semibold text-white">
+      <%= task.title %>
+    </h3>
 
-  </p>
+    <% if task.description.present? %>
+      <p class="mt-1 text-sm text-slate-400">
+        <%= task.description %>
+      </p>
+    <% end %>
+  </div>
 
-  <p>
-    <strong>Description:</strong>
-    <%= task.description %>
-  </p>
+  <!-- DONE / UNDO BUTTON -->
+  <div>
+    <%= button_to(
+          task.completed? ? "Undo" : "Done",
+          task_path(task, task: { completed: !task.completed }),
+          method: :patch,
+          form: { data: { turbo_confirm: nil } },
+          class: task.completed? ?
+                   "rounded-lg border border-yellow-400/30 px-3 py-1 text-sm text-yellow-300 hover:bg-yellow-400/10" :
+                   "rounded-lg border border-green-400/30 px-3 py-1 text-sm text-green-300 hover:bg-green-400/10"
+        ) %>
+  </div>
+</div>
 
-  <p>
-    <strong>Completed:</strong>
-    <%= task.completed %>
-  </p>
-
+<!-- STATUS BADGE -->
+<div class="mt-3">
+  <% if task.completed? %>
+    <span class="inline-flex rounded-full bg-green-400/10 px-3 py-1 text-xs font-medium text-green-300">
+      Completed
+    </span>
+  <% else %>
+    <span class="inline-flex rounded-full bg-blue-400/10 px-3 py-1 text-xs font-medium text-blue-300">
+      Active
+    </span>
+  <% end %>
 </div>
