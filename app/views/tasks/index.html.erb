@@ -1,22 +1,49 @@
-<p style="color: green"><%= notice %></p>
+<% if notice.present? %>
+  <div class="mb-6 rounded-lg border border-green-400/30 bg-green-400/10 px-4 py-3 text-green-300">
+    <%= notice %>
+  </div>
+<% end %>
 
 <% content_for :title, "Tasks" %>
 
-<h1>Tasks Manager</h1>
+<header class="mb-8 flex items-center justify-between">
+  <h1 class="text-3xl font-semibold text-white">
+    Tasks Manager
+  </h1>
 
-<p>
-  <%= link_to "ALL",  tasks_path %>
-  <%= link_to "Active", tasks_path(filter: "active" ) %> |
-  <%= link_to "Completed", tasks_path(filter: "completed" ) %>
-</p>
+  <%= link_to "New task",
+              new_task_path,
+              class: "rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white
+              shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400" %>
+</header>
 
-<div id="tasks">
-  <% @tasks.each do |task| %>
-    <%= render task %>
-    <p>
-      <%= link_to "Show this task", task %>
-    </p>
-  <% end %>
+<!-- FILTERS -->
+<div class="mb-8 inline-flex rounded-xl bg-slate-700 p-1">
+  <%= link_to "All",
+              tasks_path,
+              class: "rounded-lg px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-600" %>
+
+  <%= link_to "Active",
+              tasks_path(filter: 'active'),
+              class: "rounded-lg px-4 py-2 text-sm font-medium text-blue-300 hover:bg-slate-600" %>
+
+  <%= link_to "Completed",
+              tasks_path(filter: 'completed'),
+              class: "rounded-lg px-4 py-2 text-sm font-medium text-green-300 hover:bg-slate-600" %>
 </div>
 
-<%= link_to "New task", new_task_path %>
+<!-- TASKS -->
+<div id="tasks" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <% @tasks.each do |task| %>
+    <div class="rounded-xl border border-slate-700 bg-slate-800 p-5 shadow
+                transition hover:-translate-y-0.5 hover:border-slate-600 hover:shadow-lg">
+      <%= render task %>
+
+      <div class="mt-4 flex justify-end">
+        <%= link_to "View",
+                    task,
+                    class: "text-sm font-medium text-indigo-400 hover:text-indigo-300" %>
+      </div>
+    </div>
+  <% end %>
+</div>

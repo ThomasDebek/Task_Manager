@@ -18,13 +18,17 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+
+  <body class="min-h-screen bg-slate-900 text-slate-100 antialiased">
+  <!-- PAGE WRAPPER -->
+  <main class="container mx-auto max-w-7xl px-6 py-16">
+    <%= yield %>
+  </main>
   </body>
+
 </html>
